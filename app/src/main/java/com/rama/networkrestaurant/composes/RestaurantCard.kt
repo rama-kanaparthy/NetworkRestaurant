@@ -1,6 +1,5 @@
 package com.rama.networkrestaurant.composes
 
-import androidx.compose.foundation.Image
 import com.rama.networkrestaurant.R
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -20,12 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.Placeholder
-import com.bumptech.glide.integration.compose.placeholder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.rama.networkrestaurant.models.Restaurant
 import com.rama.networkrestaurant.ui.theme.Purple80
@@ -47,7 +43,7 @@ private val imageUrls = arrayOf(
 @Composable
 fun RestaurantCard(restaurant: Restaurant){
     Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier.fillMaxWidth(),
         shape = CutCornerShape(
             20.dp
         ),
@@ -72,7 +68,9 @@ fun RestaurantCard(restaurant: Restaurant){
                     ),
                 contentScale = ContentScale.Crop,
             ) {
-                it.diskCacheStrategy(DiskCacheStrategy.ALL) // Caching strategy
+                it.placeholder(R.drawable.placeholder) // ✅ Shows while loading
+                    .error(R.drawable.error) // ✅ Shows on failure
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) // ✅ Enables caching
             }
 
             Spacer(Modifier.padding(8.dp))

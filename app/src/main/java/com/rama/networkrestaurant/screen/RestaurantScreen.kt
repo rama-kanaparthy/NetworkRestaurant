@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -39,6 +41,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun RestaurantScreen() {
 
+    val listState = rememberLazyListState()
     val restaurantRepository = remember { RestaurantRepository() }
     val coroutineScope = rememberCoroutineScope()
     var restaurants by remember { mutableStateOf(listOf<Restaurant>()) }
@@ -49,14 +52,18 @@ fun RestaurantScreen() {
         }
     }
 
-    Column(
-        verticalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier.padding(16.dp)
-            .verticalScroll(rememberScrollState())
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        state = listState
     ) {
-        for (restaurant in restaurants){
-            RestaurantCard(restaurant)
+        restaurants.forEach{ restaurant ->
+            item{
+                Box(modifier = Modifier.fillMaxWidth()){
+                    RestaurantCard(restaurant)
+                }
+            }
         }
+
     }
 
 }
