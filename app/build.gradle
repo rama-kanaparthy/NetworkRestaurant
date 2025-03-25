@@ -47,6 +47,7 @@ dependencies {
     implementation libs.androidx.ui.tooling.preview
     implementation libs.androidx.material3
     implementation libs.glide
+    implementation libs.compose
     annotationProcessor libs.compiler
 
     testImplementation libs.junit

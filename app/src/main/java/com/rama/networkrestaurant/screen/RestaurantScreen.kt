@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +27,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.integration.compose.GlideImage
+
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RestaurantScreen() {
     Box(
@@ -30,20 +39,28 @@ fun RestaurantScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
+        var imageUrl by remember { mutableStateOf<String?>(null) }
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             // Restaurant Image
-            Image(
-                painter = painterResource(id = R.drawable.placeholder), // Replace with actual image
-                contentDescription = "Restaurant Image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-            )
+            // Load Image using Glide
+            imageUrl?.let { url ->
+                GlideImage(
+                    model = url,
+                    contentDescription = "Restaurant Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop,
+                ) {
+                    it.diskCacheStrategy(DiskCacheStrategy.ALL) // Caching strategy
+                }
+            }
 
             // Restaurant Name
             Text(
@@ -63,7 +80,9 @@ fun RestaurantScreen() {
 
         // Button at Bottom
         Button(
-            onClick = { /* TODO: Implement image loading */ },
+            onClick = {
+                imageUrl = "https://images.pexels.com/photos/735869/pexels-photo-735869.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                      },
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter) // Aligns button at the bottom

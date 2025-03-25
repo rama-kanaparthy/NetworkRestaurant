@@ -59,7 +59,7 @@ fun ContentMain(modifier: Modifier = Modifier) {
             .background(Color.LightGray),
         contentAlignment = Alignment.Center
     ) {
-        RestaurantScreen()
+
     }
 }
 
