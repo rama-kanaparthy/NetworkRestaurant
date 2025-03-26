@@ -68,9 +68,9 @@ fun RestaurantCard(restaurant: Restaurant){
                     ),
                 contentScale = ContentScale.Crop,
             ) {
-                it.placeholder(R.drawable.placeholder) // ✅ Shows while loading
-                    .error(R.drawable.error) // ✅ Shows on failure
-                    .diskCacheStrategy(DiskCacheStrategy.ALL) // ✅ Enables caching
+                it.placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
             }
 
             Spacer(Modifier.padding(8.dp))
